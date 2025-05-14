@@ -6,6 +6,8 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-compat.url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
   };
 
   outputs =
@@ -42,8 +44,9 @@
 
           devShells = {
             default = pkgs.mkShell {
-              buildInputs = [
-                (pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml)
+              buildInputs = with pkgs; [
+                (rust-bin.fromRustupToolchainFile ./rust-toolchain.toml)
+                rust-analyzer
               ];
               packages = [ pkgs.cowsay ];
             };
